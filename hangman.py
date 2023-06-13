@@ -1,9 +1,72 @@
 # build a hangman game with python
 import random
 
+stages = ['''
+  +---+
+  |   |
+  O   |
+ /|\  |
+ / \  |
+      |
+=========
+''', '''
+  +---+
+  |   |
+  O   |
+ /|\  |
+ /    |
+      |
+=========
+''', '''
+  +---+
+  |   |
+  O   |
+ /|\  |
+      |
+      |
+=========
+''', '''
+  +---+
+  |   |
+  O   |
+ /|   |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+  |   |
+      |
+      |
+=========
+''', '''
+  +---+
+  |   |
+  O   |
+      |
+      |
+      |
+=========
+''', '''
+  +---+
+  |   |
+      |
+      |
+      |
+      |
+=========
+''']
+
+
+
 word_list = ["ardvark", "baboon", "camel"]
 chosen_word = random.choice(word_list)
 word_length = len(chosen_word)
+
+# create variable , lives, to keep track of the number of lives left. set to 6 
+
+lives = 6 
 
 # testing code
 print(f"Psst, the solution is {chosen_word}")
@@ -32,9 +95,20 @@ while not end_of_game:
         )
         if letter == guess:
             display[position] = letter
+    # if guess is not a letter in the chosen word, the reduce lives by 1
+    if guess not in chosen_word:
+        lives -= 1
+        if lives == 0:
+            end_of_game = True
+            print('You lose.')
+            
 
-    print(display)
+    print(f'{" ".join(display)}')
 
     if "_" not in display:
         end_of_game == True
         print("You win.")
+
+    # print the ASCII art for the stages of the game
+
+    print(stages[lives])
